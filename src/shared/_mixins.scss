@@ -1,0 +1,8 @@
+@import "./variavles";
+
+@mixin title {
+  font-size: 60px;
+  font-style: italic;
+  text-align: center;
+  color: $primary-text-color;
+}

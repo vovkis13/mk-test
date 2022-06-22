@@ -1,0 +1,1 @@
+export { FighterListItem } from './FighterListItem';

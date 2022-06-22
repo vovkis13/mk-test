@@ -1,0 +1,11 @@
+.selected-fighter {
+  position: relative;
+  &-img {
+    position: absolute;
+    bottom: 0;
+    width: 10rem;
+  }
+  &-img.player2 {
+    transform: rotateY(180deg) translateX(10rem);
+  }
+}

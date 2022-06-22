@@ -1,0 +1,25 @@
+@import "../../../../shared/variavles";
+
+.fighters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  &-item {
+    height: 7rem; 
+    border: $fighters-icon-border groove $border-color;
+    &.selected1 {
+      border: $fighters-icon-border ridge $player1-color;
+    }
+    &.selected2 {
+      border: $fighters-icon-border ridge $player2-color;
+    }
+    &.selected1.selected2 {
+      border-color: $player1-color $player1-color $player2-color $player2-color;
+    }
+    &-icon {
+      height: 100%;
+    }
+  }
+}

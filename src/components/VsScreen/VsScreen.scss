@@ -1,0 +1,37 @@
+@import "../../shared/mixins";
+
+.vs {
+  &-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-title {
+    @include title;
+  }
+  &-versus {
+    position: absolute;
+    top: 8rem;
+    width: 8rem;
+  }
+}
+
+.vs-fighters {
+  display: flex;
+  gap: 0.5rem;
+  transition: gap 2s ease-out;
+  &.moving {
+    gap: 10rem;
+  }
+  &-item {
+    width: 30rem;
+    height: 30rem;
+  }
+  &-img {
+    height: 100%;
+    &.player2 {
+    transform: rotateY(180deg);
+    }
+  }
+}

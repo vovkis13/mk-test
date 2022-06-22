@@ -1,0 +1,24 @@
+.bonus {
+  &-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  &-logo {
+    width: 30rem;
+    height: 30rem;
+  }
+  &-logo.bonus {
+    transform: rotateY(45deg);
+    animation: rotateAnimation 3s linear infinite;
+  }
+}
+@keyframes rotateAnimation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}

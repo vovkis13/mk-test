@@ -1,0 +1,10 @@
+@import "../../../../../../shared/variavles";
+
+.bonus-list-item {
+  width: 3rem;
+  height: 3rem;
+  border: $bonus-icon-border ridge $border-color;
+  &:not(:last-child) {
+    border-right: none;
+  }
+}

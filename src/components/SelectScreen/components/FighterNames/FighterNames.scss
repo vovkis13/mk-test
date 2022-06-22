@@ -1,0 +1,21 @@
+@import "../../../../shared/variavles";
+
+.select {
+  &-fighternames {
+    display: grid;
+    grid-template-columns: 9fr 1fr 9fr;
+    justify-items: center;
+    align-items: center;
+  }
+  &-fightername {
+    font-size: 2rem;
+    font-style: italic;
+    color: $primary-text-color;
+    &.player1 {
+      color: $player1-color;
+    }
+    &.player2 {
+      color: $player2-color;
+    }
+  }
+}

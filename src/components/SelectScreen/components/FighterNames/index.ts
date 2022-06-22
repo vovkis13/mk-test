@@ -1,0 +1,1 @@
+export { FighterNames } from './FighterNames';

@@ -1,0 +1,1 @@
+export { FighterList } from './FighterList';
