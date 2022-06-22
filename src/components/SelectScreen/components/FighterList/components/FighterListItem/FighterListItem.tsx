@@ -17,7 +17,7 @@ export const FighterListItem = (props: FighterListItemProps): JSX.Element => {
     >
       <img
         className={"fighters-item-icon"}
-        src={`/fighters/${fighter.file}/${fighter.file}-icon.webp`}
+        src={`${process.env.PUBLIC_URL}/fighters/${fighter.file}/${fighter.file}-icon.webp`}
         alt={fighter.name}
       />
     </li>

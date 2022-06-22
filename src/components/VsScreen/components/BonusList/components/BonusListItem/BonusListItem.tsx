@@ -11,7 +11,7 @@ export const BonusListItem = ({ bonus }: BonusListItemProps) => {
     <div className='bonus-list-item'>
       <img
         className="bonus-img"
-        src={`/bonuses/${BONUSES[bonus]}.jpg`}
+        src={`${process.env.PUBLIC_URL}/bonuses/${BONUSES[bonus]}.jpg`}
         alt={BONUSES[bonus]}
       />
     </div>

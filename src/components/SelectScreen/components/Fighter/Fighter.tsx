@@ -14,7 +14,7 @@ export const Fighter = ({ fighterId, player }: FighterProps): JSX.Element => {
     <div className="selected-fighter">
       <img
         className={`selected-fighter-img player${player}`}
-        src={`/fighters/${file}/${file}.webp`}
+        src={`${process.env.PUBLIC_URL}/fighters/${file}/${file}.webp`}
         alt={name}
       />
     </div>
