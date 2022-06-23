@@ -17,7 +17,7 @@ export const BonusScreen = ({ bonus }: BonusScreenProps): JSX.Element => {
     <div className="bonus-container">
       <img
         className={`bonus-logo ${bonus ? "bonus" : ""}`}
-        src="mk-logo.png"
+        src={`${process.env.PUBLIC_URL}/mk-logo.png`}
         alt="mortal kombat logo"
       />
       {bonus && <Sound id="bonus" />}

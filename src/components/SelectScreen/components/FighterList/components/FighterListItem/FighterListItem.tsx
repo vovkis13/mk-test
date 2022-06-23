@@ -9,6 +9,7 @@ interface FighterListItemProps {
 
 export const FighterListItem = (props: FighterListItemProps): JSX.Element => {
   const { fighter, selected1, selected2 } = props;
+  const { name, file } = fighter;
   return (
     <li
       className={`fighters-item 
@@ -17,8 +18,8 @@ export const FighterListItem = (props: FighterListItemProps): JSX.Element => {
     >
       <img
         className={"fighters-item-icon"}
-        src={`${process.env.PUBLIC_URL}/fighters/${fighter.file}/${fighter.file}-icon.webp`}
-        alt={fighter.name}
+        src={`${process.env.PUBLIC_URL}/fighters/${file}/icon.webp`}
+        alt={name}
       />
     </li>
   );

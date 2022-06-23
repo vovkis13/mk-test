@@ -13,7 +13,7 @@ export const VsFighter = ({ fighterId, player }: VsFighterProps) => {
   return (
     <div className="vs-fighters-item">
       <img
-        src={`${process.env.PUBLIC_URL}/fighters/${file}/${file}-vs.webp`}
+        src={`${process.env.PUBLIC_URL}/fighters/${file}/versus.png`}
         alt={name}
         className={`vs-fighters-img player${player}`}
       />

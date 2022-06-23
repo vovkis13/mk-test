@@ -21,6 +21,7 @@ const initialFighters: IFightersSelect = {
 export const SelectScreen = (props: SelectScreenProps): JSX.Element => {
   const { selectFighters, changeScreen } = props;
 
+  const [pressedKeys, setPressedKeys] = useState<number>(0);
   const [pressedEnter, setPressedEnter] = useState<number>(0);
   const [choosingFighters, setChoosingFighters] =
     useState<IFightersSelect>(initialFighters);
@@ -39,6 +40,7 @@ export const SelectScreen = (props: SelectScreenProps): JSX.Element => {
   };
 
   const keyDownHandler = ({ code }: KeyboardEvent): void => {
+    setPressedKeys((counter) => counter + 1)
     if (code.includes("Arrow")) arrowKeyDownHandler(code);
     else if (code === "Enter") setPressedEnter((counter) => counter + 1);
   };
@@ -58,16 +60,29 @@ export const SelectScreen = (props: SelectScreenProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pressedEnter]);
 
+  useEffect(() => {
+    if (pressedKeys === 1) sound.play("select");
+  }, [pressedKeys]);
+
   return (
     <div className="select-container">
       <h1 className="select-title">select your fighter</h1>
       <FighterList selection={choosingFighters} />
       <div className="select-fighters">
-        <Fighter player={1} fighterId={choosingFighters.firstFighter} />
-        <Fighter player={2} fighterId={choosingFighters.secondFighter} />
+        <Fighter
+          player={1}
+          fighterId={choosingFighters.firstFighter}
+          selected={pressedEnter > 0}
+        />
+        <Fighter
+          player={2}
+          fighterId={choosingFighters.secondFighter}
+          selected={pressedEnter === 2}
+        />
       </div>
       <FighterNames fighters={choosingFighters} selected={pressedEnter} />
 
+      <Sound id="select" />
       <Sound id="choosing" />
       <Sound id="selected1" />
       <Sound id="selected2" />
