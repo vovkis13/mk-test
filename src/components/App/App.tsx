@@ -1,40 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { Dispatch } from "redux";
 import { SelectScreen } from "components/SelectScreen";
 import { VsScreen } from "components/VsScreen";
 import { BonusScreen } from "components/BonusScreen";
-import type { IFightersSelect } from "shared/types";
+import { getScreenNumber } from "redux/selectors";
+import { setScreenNumber } from "redux/actions";
+import type { SetScreenNumberAction } from "redux/types";
 import "./App.scss";
 
-const initialFighters: IFightersSelect = {
-  firstFighter: -1,
-  secondFighter: -1,
-};
-
-export const App = () => {
-  const [screenNumber, setScreenNumber] = useState<number>(1);
-  const [selectedFighters, setSelectedFighters] =
-    useState<IFightersSelect>(initialFighters);
-  const [bonus, setBonus] = useState<boolean>(false);
+export const App: React.FC = () => {
+  const screenNumber: number = useSelector(getScreenNumber);
+  const dispatch: Dispatch<SetScreenNumberAction> = useDispatch();
 
   useEffect(() => {
     if (screenNumber === 2)
       setTimeout(() => {
-        setScreenNumber(3);
+        dispatch(setScreenNumber(3));
       }, 4000);
-  }, [screenNumber]);
+  }, [dispatch, screenNumber]);
 
   return (
     <div className="App">
-      {screenNumber === 1 && (
-        <SelectScreen
-          changeScreen={setScreenNumber}
-          selectFighters={setSelectedFighters}
-        />
-      )}
-      {screenNumber === 2 && (
-        <VsScreen fighters={selectedFighters} setBonus={setBonus} />
-      )}
-      {screenNumber === 3 && <BonusScreen bonus={bonus} />}
+      {screenNumber === 1 && <SelectScreen/>}
+      {screenNumber === 2 && <VsScreen />}
+      {screenNumber === 3 && <BonusScreen />}
     </div>
   );
 };

@@ -10,3 +10,5 @@ export interface IFightersSelect {
 }
 
 export type PlayerNumber = 1 | 2;
+
+export type BonusCode = [number, number, number, number, number, number];

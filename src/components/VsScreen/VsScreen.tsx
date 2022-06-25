@@ -1,19 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VsFighter } from "./components/VsFighter";
 import { BonusList } from "./components/BonusList";
 import { FIGHTERS_MOVING_TIME } from "shared/constants";
 import { Sound } from "components/Sound";
 import sound from "shared/soundService";
-import type { IFightersSelect } from "shared/types";
 import "./VsScreen.scss";
 
-interface VsScreenProps {
-  fighters: IFightersSelect;
-  setBonus: Dispatch<SetStateAction<boolean>>;
-}
-
-export const VsScreen = (props: VsScreenProps): JSX.Element => {
-  const { fighters, setBonus } = props;
+export const VsScreen: React.FC = () => {
   const [isMoving, setIsMoving] = useState<boolean>(true);
 
   useEffect(() => {
@@ -33,10 +26,10 @@ export const VsScreen = (props: VsScreenProps): JSX.Element => {
         alt="versus"
       />
       <div className={`vs-fighters ${isMoving ? "moving" : ""}`}>
-        <VsFighter fighterId={fighters.firstFighter} player={1} />
-        <VsFighter fighterId={fighters.secondFighter} player={2} />
+        <VsFighter player={1} />
+        <VsFighter player={2} />
       </div>
-      <BonusList setBonus={setBonus} />
+      <BonusList />
       
       <Sound id="versus" />
     </div>
