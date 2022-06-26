@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { Dispatch } from "redux";
 import { SelectScreen } from "components/SelectScreen";
@@ -6,10 +6,11 @@ import { VsScreen } from "components/VsScreen";
 import { BonusScreen } from "components/BonusScreen";
 import { getScreenNumber } from "redux/selectors";
 import { setScreenNumber } from "redux/actions";
+import { SECOND_SCREEN_DELAY } from "shared/constants";
 import type { SetScreenNumberAction } from "redux/types";
 import "./App.scss";
 
-export const App: React.FC = () => {
+export const App: FC = () => {
   const screenNumber: number = useSelector(getScreenNumber);
   const dispatch: Dispatch<SetScreenNumberAction> = useDispatch();
 
@@ -17,7 +18,7 @@ export const App: React.FC = () => {
     if (screenNumber === 2)
       setTimeout(() => {
         dispatch(setScreenNumber(3));
-      }, 4000);
+      }, SECOND_SCREEN_DELAY);
   }, [dispatch, screenNumber]);
 
   return (

@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedCounter, getSelectedFighters } from 'redux/selectors';
+import { getSelected, getSelectedFighters } from 'redux/selectors';
 import { getFighterById } from 'shared/getFighterById';
 import type { IFightersSelect, PlayerNumber } from 'shared/types';
 import './Fighter.scss';
 
 interface FighterProps {
-  player: PlayerNumber;
+  playerNumber: PlayerNumber;
 }
 
-export const Fighter: React.FC<FighterProps> = ({ player }: FighterProps) => {
+export const Fighter: FC<FighterProps> = ({ playerNumber }) => {
   const selectedFighters: IFightersSelect = useSelector(getSelectedFighters);
-  const fighterId = Object.values(selectedFighters)[player - 1];
+  const selected: number = useSelector(getSelected);
+
+  const fighterId: number = Object.values(selectedFighters)[playerNumber - 1];
   const { name, file } = getFighterById(fighterId);
-  const selectedCounter: number = useSelector(getSelectedCounter);
-  const selected = player === selectedCounter || selectedCounter === 2;
-  const fileName = selected ? 'selected.png' : 'moving.webp';
-  const path = `${process.env.PUBLIC_URL}/fighters/${file}/${fileName}`;
+  const imagePath: string = `${process.env.PUBLIC_URL}/fighters/${file}/${
+    playerNumber === selected || selected === 2
+      ? 'selected.png'
+      : 'moving.webp'
+  }`;
+
   return (
     <div className="selected-fighter">
       <img
-        className={`selected-fighter-img player${player}`}
-        src={path}
+        className={`selected-fighter-img player${playerNumber}`}
+        src={imagePath}
         alt={name}
       />
     </div>

@@ -6,8 +6,7 @@ export const getScreenNumber = (state: State): number => state.screenNumber;
 export const getSelectedFighters = (state: State): IFightersSelect =>
   state.selectedFighters;
 
-export const getSelectedCounter = (state: State): number =>
-  state.selectedCounter;
+export const getSelected = (state: State): number => state.selected;
 
 export const getBonusCode = (state: State): BonusCode =>
   state.bonusCode as BonusCode;

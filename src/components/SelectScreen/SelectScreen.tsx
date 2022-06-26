@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { FighterList } from './components/FighterList';
@@ -6,35 +6,30 @@ import { Fighter } from './components/Fighter';
 import { FighterNames } from './components/FighterNames';
 import { Sound } from '../Sound';
 import sound from 'shared/soundService';
-import { FIGHTERS_NUMBER, FIRST_SCREEN_DELAY } from 'shared/constants';
 import {
-  setFightersAction,
-  setScreenNumber,
-  setSelectedCounterAction,
-} from 'redux/actions';
+  FIGHTERS_NUMBER,
+  FIRST_SCREEN_DELAY,
+  INITIAL_FIGHTERS,
+} from 'shared/constants';
+import { setFighters, setScreenNumber, setSelected } from 'redux/actions';
 import type {
   SetFightersAction,
   SetScreenNumberAction,
-  SetSelectedCounterAction,
+  SetSelectedAction,
 } from 'redux/types';
 import type { IFightersSelect } from 'shared/types';
 import './SelectScreen.scss';
-import { getSelectedCounter } from 'redux/selectors';
+import { getSelected } from 'redux/selectors';
 
-const initialFighters: IFightersSelect = {
-  firstFighter: 0,
-  secondFighter: 4,
-};
-
-export const SelectScreen: React.FC = () => {
+export const SelectScreen: FC = () => {
   const dispatchScreenNumber: Dispatch<SetScreenNumberAction> = useDispatch();
-  const dispatchSelectedCounter: Dispatch<SetSelectedCounterAction> =
-    useDispatch();
+  const dispatchSelected: Dispatch<SetSelectedAction> = useDispatch();
   const dispatchSelectedFighters: Dispatch<SetFightersAction> = useDispatch();
-  const selectedCounter = useSelector(getSelectedCounter);
+  const selected: number = useSelector(getSelected);
+
   const [pressedKeys, setPressedKeys] = useState<number>(0);
   const [choosingFighters, setChoosingFighters] =
-    useState<IFightersSelect>(initialFighters);
+    useState<IFightersSelect>(INITIAL_FIGHTERS);
 
   const arrowKeyDownHandler = (code: string): void => {
     sound.play('choosing');
@@ -42,8 +37,8 @@ export const SelectScreen: React.FC = () => {
     const step: number = code === 'ArrowRight' || code === 'ArrowLeft' ? 1 : 5;
     setChoosingFighters(prev => ({
       ...prev,
-      [Object.keys(prev)[selectedCounter]]:
-        (Object.values(prev)[selectedCounter] + FIGHTERS_NUMBER + dir * step) %
+      [Object.keys(prev)[selected]]:
+        (Object.values(prev)[selected] + FIGHTERS_NUMBER + dir * step) %
         FIGHTERS_NUMBER,
     }));
   };
@@ -51,14 +46,13 @@ export const SelectScreen: React.FC = () => {
   const keyDownHandler = ({ code }: KeyboardEvent): void => {
     setPressedKeys(counter => counter + 1);
     if (code.includes('Arrow')) arrowKeyDownHandler(code);
-    else if (code === 'Enter')
-      dispatchSelectedCounter(setSelectedCounterAction());
+    else if (code === 'Enter') dispatchSelected(setSelected());
   };
 
   useEffect(() => {
     document.addEventListener('keydown', keyDownHandler, false);
-    sound.play(`selected${selectedCounter}`);
-    if (selectedCounter === 2) {
+    sound.play(`selected${selected}`);
+    if (selected === 2) {
       setTimeout(() => {
         dispatchScreenNumber(setScreenNumber(2));
       }, FIRST_SCREEN_DELAY);
@@ -67,23 +61,23 @@ export const SelectScreen: React.FC = () => {
       document.removeEventListener('keydown', keyDownHandler, false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCounter]);
+  }, [selected]);
 
   useEffect(() => {
     if (pressedKeys === 1) sound.play('select');
   }, [pressedKeys]);
 
   useEffect(() => {
-    dispatchSelectedFighters(setFightersAction(choosingFighters));
-  }, [choosingFighters]);
+    dispatchSelectedFighters(setFighters(choosingFighters));
+  }, [choosingFighters, dispatchSelectedFighters]);
 
   return (
     <div className="select-container">
       <h1 className="select-title">select your fighter</h1>
       <FighterList />
       <div className="select-fighters">
-        <Fighter player={1} />
-        <Fighter player={2} />
+        <Fighter playerNumber={1} />
+        <Fighter playerNumber={2} />
       </div>
       <FighterNames />
 

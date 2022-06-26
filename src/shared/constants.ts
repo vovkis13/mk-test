@@ -1,3 +1,5 @@
+import type { IFightersSelect } from "./types";
+
 export const FIGHTERS_NUMBER = 15;
 export const FIRST_SCREEN_DELAY = 2000;
 export const SECOND_SCREEN_DELAY = 4000;
@@ -18,3 +20,9 @@ export const BONUSES = [
   'kahn',
   'skull',
 ];
+
+export const INITIAL_FIGHTERS: IFightersSelect = {
+  firstFighter: 0,
+  secondFighter: 4,
+};
+

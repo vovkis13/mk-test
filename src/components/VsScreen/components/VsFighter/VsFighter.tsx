@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedFighters } from 'redux/selectors';
 import { getFighterById } from 'shared/getFighterById';
@@ -8,13 +8,12 @@ interface VsFighterProps {
   player: PlayerNumber;
 }
 
-export const VsFighter: React.FC<VsFighterProps> = ({
-  player,
-}: VsFighterProps) => {
+export const VsFighter: FC<VsFighterProps> = ({ player }) => {
   const selectedFighters: IFightersSelect = useSelector(getSelectedFighters);
-  const fighterId = Object.values(selectedFighters)[player - 1];
+
+  const fighterId: number = Object.values(selectedFighters)[player - 1];
   const { name, file } = getFighterById(fighterId);
-  const path = `${process.env.PUBLIC_URL}/fighters/${file}/versus.png`;
+  const path: string = `${process.env.PUBLIC_URL}/fighters/${file}/versus.png`;
   return (
     <div className="vs-fighters-item">
       <img

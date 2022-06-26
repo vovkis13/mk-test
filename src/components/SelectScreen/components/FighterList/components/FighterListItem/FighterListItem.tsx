@@ -1,26 +1,26 @@
-import React from "react";
-import type { IFighter } from "shared/types";
+import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { getSelectedFighters } from 'redux/selectors';
+import type { IFighter, IFightersSelect } from 'shared/types';
 
 interface FighterListItemProps {
   fighter: IFighter;
-  selected1: boolean;
-  selected2: boolean;
 }
 
-export const FighterListItem = (props: FighterListItemProps): JSX.Element => {
-  const { fighter, selected1, selected2 } = props;
-  const { name, file } = fighter;
+export const FighterListItem: FC<FighterListItemProps> = ({ fighter }) => {
+  const { id, name, file } = fighter;
+  const selectedFighters: IFightersSelect = useSelector(getSelectedFighters);
+  
+  const path: string = `${process.env.PUBLIC_URL}/fighters/${file}/icon.webp`;
+  const selected: string = `selected${
+    (id === selectedFighters.firstFighter && '1') ||
+    (id === selectedFighters.secondFighter && '2') ||
+    ''
+  }`;
+
   return (
-    <li
-      className={`fighters-item 
-      ${selected1 ? "selected1" : ""} 
-      ${selected2 ? "selected2" : ""}`}
-    >
-      <img
-        className={"fighters-item-icon"}
-        src={`${process.env.PUBLIC_URL}/fighters/${file}/icon.webp`}
-        alt={name}
-      />
+    <li className={`fighters-item  ${selected}`}>
+      <img className={'fighters-item-icon'} src={path} alt={name} />
     </li>
   );
 };
