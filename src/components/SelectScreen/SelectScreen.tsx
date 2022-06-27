@@ -22,9 +22,9 @@ import './SelectScreen.scss';
 import { getSelected } from 'redux/selectors';
 
 export const SelectScreen: FC = () => {
-  const dispatchScreenNumber: Dispatch<SetScreenNumberAction> = useDispatch();
-  const dispatchSelected: Dispatch<SetSelectedAction> = useDispatch();
-  const dispatchSelectedFighters: Dispatch<SetFightersAction> = useDispatch();
+  const dispatch: Dispatch<
+    SetScreenNumberAction | SetSelectedAction | SetFightersAction
+  > = useDispatch();
   const selected: number = useSelector(getSelected);
 
   const [pressedKeys, setPressedKeys] = useState<number>(0);
@@ -46,7 +46,7 @@ export const SelectScreen: FC = () => {
   const keyDownHandler = ({ code }: KeyboardEvent): void => {
     setPressedKeys(counter => counter + 1);
     if (code.includes('Arrow')) arrowKeyDownHandler(code);
-    else if (code === 'Enter') dispatchSelected(setSelected());
+    else if (code === 'Enter') dispatch(setSelected());
   };
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const SelectScreen: FC = () => {
     sound.play(`selected${selected}`);
     if (selected === 2) {
       setTimeout(() => {
-        dispatchScreenNumber(setScreenNumber(2));
+        dispatch(setScreenNumber(2));
       }, FIRST_SCREEN_DELAY);
     }
     return () => {
@@ -68,8 +68,8 @@ export const SelectScreen: FC = () => {
   }, [pressedKeys]);
 
   useEffect(() => {
-    dispatchSelectedFighters(setFighters(choosingFighters));
-  }, [choosingFighters, dispatchSelectedFighters]);
+    dispatch(setFighters(choosingFighters));
+  }, [choosingFighters, dispatch]);
 
   return (
     <div className="select-container">

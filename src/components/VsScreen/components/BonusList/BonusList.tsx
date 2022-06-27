@@ -12,8 +12,8 @@ import type { BonusCode } from 'shared/types';
 import './BonusList.scss';
 
 export const BonusList: FC = () => {
-  const dispatchBonusCode: Dispatch<SetBonusCodeAction> = useDispatch();
-  const dispatchBonusStatus: Dispatch<SetBonusStatusAction> = useDispatch();
+  const dispatch: Dispatch<SetBonusCodeAction | SetBonusStatusAction> =
+    useDispatch();
   const bonusCode: BonusCode = useSelector(getBonusCode);
 
   const keyDownHandler = ({ code }: KeyboardEvent): void => {
@@ -22,14 +22,14 @@ export const BonusList: FC = () => {
     );
     if (bonusCodeIndex >= 0) {
       sound.play('code');
-      dispatchBonusCode(setBonusCode(bonusCodeIndex));
+      dispatch(setBonusCode(bonusCodeIndex));
     }
   };
 
   useEffect(() => {
     if (bonusCode.join('') === BONUS_CODE)
-      dispatchBonusStatus(setBonusStatus());
-  }, [bonusCode, dispatchBonusStatus]);
+      dispatch(setBonusStatus());
+  }, [bonusCode, dispatch]);
 
   useEffect(() => {
     document.addEventListener('keydown', keyDownHandler, false);
